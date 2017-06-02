@@ -1,4 +1,7 @@
 var user = require('../user.js');
+var skillz = require('../skillz.js')
+var middleware = require('./middleware.js')
+var secrets = require('../secrets.js')
 
 exports.getName = function (req, res, next) {
     res.send({"name": user.name}) 
@@ -43,32 +46,6 @@ exports.getFamily = function(req, res, next) {
     res.send(family);
     }
 }
-// exports.getFamily = function (req, res, next) {
-//  const familyMembers = user.family
-//     if (req.query.relation) {
-//         for (let i =0; i < familyMembers.length; i++) {
-//             if (familyMembers[i].relation == req.query.relation) {
-//              var relationship =  familyMembers.slice(i)
-//             return relationship
-//             }
-           
-//         }
-//     }
-//     res.send(relationship)
-// }
-
-//       if (req.query.relation) {
-//         res.status(200).send( user.family.filter(function (e){
-//         return e.relation == req.query.relation  
-//         }) 
-        
-//         )
-    
-      
-
-
-// }
-   
  exports.getFamilyGender = function(req, res, next) {
     let targetGender = req.params.gender;
     let family = user.family;
@@ -88,18 +65,26 @@ exports.getRestaurants = function (req, res, next) {
     }
 }
 
-// exports.getRestaurants = function (req, res) {
-//         if (req.query.rating) {
-//             var restRating = user.restaurants.filter(function (e) {
-//                 return e.rating >= req.query.rating;
-//             })
 exports.getRestaurantsName = function (req, res) {
     res.status(200).send({"Restaurants": user.restaurants.filter(function(e) {
        return e.name == req.params.name;
    })})
 }
+exports.getSkillz = function(req, res, next)
+{ 
+         if(req.query.experience) {
+             let experienceLevel = skillz.filter(x => {
+                return x.experience === req.query.experience;
+            })
+            res.status(200).send(experienceLevel)
+         }
+         res.status(200).send(skillz)
+     }
 
 
+exports.getSecrets = function(req, res){
+         res.status(200).json('shhhhhh '+ secrets);
+     }
 // exports.getRestaurantName = function (req, res, next) { 
 //     res.status(200).send({"restaurants": user.restaurants.filter(function(value) {
 //         return value.name == req.params.name;
@@ -107,11 +92,11 @@ exports.getRestaurantsName = function (req, res) {
 // }
 exports.updateName = function (req, res, next) {
          user.name = req.body.name;
-         res.status(200).json('Name has been changed to ' + user.name)
+         res.status(200).send('Name has been changed to ' + user.name)
      }
 exports.updateLocation = function (req, res, next) {
        user.location = req.body.location;
-         res.status(200).json('Name has been changed to ' + user.name)
+         res.status(200).send('Location has been changed to ' + user.location)
      }
 exports.postHobby = function(req, res) {
          user.hobbies.push(req.body);
@@ -129,3 +114,8 @@ exports.postRestaurant = function(req, res) {
          user.restaurants.push(req.body.restaurants);
          res.status(200).send(user.restaurants)         
 }
+ exports.postSkillz = function(req, res) {
+         skillz.push(req.body);
+         res.status(200).json(skillz)
+     }
+

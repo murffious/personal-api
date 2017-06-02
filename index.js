@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 var middleware = require('./controllers/middleware');
 const mainCtrl = require('./controllers/mainCtrl.js');
 const user = require('./user.js')
+const skillz = require('./skillz.js')
 const app = express()
 
 
@@ -19,6 +20,7 @@ app.get('/family', mainCtrl.getFamily)
 app.get('/family/:gender', mainCtrl.getFamilyGender)
 app.get('/restaurants', mainCtrl.getRestaurants)
 app.get('/restaurants/:name', mainCtrl.getRestaurantsName)
+app.get('/skillz', mainCtrl.getSkillz)
 
 app.put('/name', mainCtrl.updateName)
 app.put('/location', mainCtrl.updateLocation)
