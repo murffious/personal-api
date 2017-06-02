@@ -19,7 +19,14 @@ app.get('/family', mainCtrl.getFamily)
 app.get('/family/:gender', mainCtrl.getFamilyGender)
 app.get('/restaurants', mainCtrl.getRestaurants)
 app.get('/restaurants/:name', mainCtrl.getRestaurantsName)
-app
+
+app.put('/name', mainCtrl.updateName)
+app.put('/location', mainCtrl.updateLocation)
+
+app.post('/hobbies', mainCtrl.postHobby)
+app.post('/occupations', mainCtrl.postOccupations)
+app.post('/family', mainCtrl.postFamily)
+app.post('/restaurants', mainCtrl.postRestaurant)
 
 app.listen(3001, function (){
     console.log("listening on port 3001")

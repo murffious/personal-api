@@ -7,7 +7,16 @@ exports.getLocation = function (req, res, next) {
      res.send({'location': user.location})
 }
 exports.getOccupations = function (req, res, next) {
-     res.send({'occupations': user.occupations})
+     
+    if (req.query.order === "desc") {
+    return  res.send({'occupations': user.occupations.sort()}) 
+    }     
+    else if ("req.query.order === asc") {
+         return  res.send({'occupations': user.occupations.sort().reverse()});
+        }  
+    else {
+       return  res.send({'occupations': user.occupations}) 
+        }     
 }
 exports.getLatestOccupation = function (req, res, next) {
    
@@ -96,4 +105,27 @@ exports.getRestaurantsName = function (req, res) {
 //         return value.name == req.params.name;
 //     })})  
 // }
-
+exports.updateName = function (req, res, next) {
+         user.name = req.body.name;
+         res.status(200).json('Name has been changed to ' + user.name)
+     }
+exports.updateLocation = function (req, res, next) {
+       user.location = req.body.location;
+         res.status(200).json('Name has been changed to ' + user.name)
+     }
+exports.postHobby = function(req, res) {
+         user.hobbies.push(req.body);
+         res.status(200).send(user.hobbies)         
+     }
+exports.postOccupations = function(req, res) {
+         user.occupations.push(req.body.occupations);
+         res.status(200).send(user.occupations)         
+}
+exports.postFamily = function(req, res) {
+         user.family.push(req.body);
+         res.status(200).send(user.family)         
+}
+exports.postRestaurant = function(req, res) {
+         user.restaurants.push(req.body.restaurants);
+         res.status(200).send(user.restaurants)         
+}
